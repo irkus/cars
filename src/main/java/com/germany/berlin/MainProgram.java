@@ -53,7 +53,7 @@ public class MainProgram {
                 return new CarsExportJson();
             }
             default: {
-                throw new RuntimeException("Unsupported file folmat");
+                throw new RuntimeException("Unsupported file format");
             }
         }
     }
