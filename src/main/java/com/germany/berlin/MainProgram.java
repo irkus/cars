@@ -7,15 +7,54 @@ import java.util.List;
  */
 public class MainProgram {
 
+    //should be taken from config file
+    private static final String DATABASE = "oracle";
+    private static final String EXPORT_TARGET = "csv";
+
 
     public static void main(String[] args) {
 
-        CarsDao carsDao = new CarsDaoOracle();
-        List<Car> cars = carsDao.getAllCars();
+        CarService service = init();
+
+        List<Car> cars = service.getCars();
         System.out.println(cars);
+        service.export(cars);
+    }
 
-        CarsExport export = new CarsExportCsv();
-        export.export(cars);
+    private static CarService init() {
+        CarService carService = new CarService();
+        carService.setCarsDao(getCarsDaoImpl());
+        carService.setCarsExport(getCarsExportImpl());
+        return carService;
+    }
 
+
+    private static CarsDao getCarsDaoImpl() {
+        switch (DATABASE) {
+            case "oracle": {
+                return new CarsDaoOracle();
+            }
+            case "mongodb": {
+                return new CarsDaoMongoDb();
+            }
+            default: {
+                throw new RuntimeException("Unknown DB");
+            }
+        }
+    }
+
+
+    private static CarsExport getCarsExportImpl() {
+        switch (EXPORT_TARGET) {
+            case "csv": {
+                return new CarsExportCsv();
+            }
+            case "json": {
+                return new CarsExportJson();
+            }
+            default: {
+                throw new RuntimeException("Unsupported file folmat");
+            }
+        }
     }
 }
