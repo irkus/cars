@@ -18,7 +18,7 @@ public class MainProgram {
 
         List<Car> cars = service.getCars();
         System.out.println(cars);
-        service.export(cars);
+        service.export();
     }
 
     private static CarService init() {

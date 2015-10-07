@@ -14,7 +14,8 @@ public class CarService {
         return carsDao.getAllCars();
     }
 
-    public void export(List<Car> cars) {
+    public void export() {
+        List<Car> cars = carsDao.getAllCars();
         carsExport.export(cars);
     }
 
