@@ -1,5 +1,8 @@
 package com.germany.berlin;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.util.List;
 
 /**
@@ -7,54 +10,14 @@ import java.util.List;
  */
 public class MainProgram {
 
-    //should be taken from config file
-    private static final String DATABASE = "oracle";
-    private static final String EXPORT_TARGET = "csv";
-
-
     public static void main(String[] args) {
 
-        CarService service = init();
+        ApplicationContext context = new ClassPathXmlApplicationContext("spring-cars-beans.xml");
 
+        CarService service = (CarService) context.getBean("CarService");
         List<Car> cars = service.getCars();
         System.out.println(cars);
         service.export();
     }
 
-    private static CarService init() {
-        CarService carService = new CarService();
-        carService.setCarsDao(getCarsDaoImpl());
-        carService.setCarsExport(getCarsExportImpl());
-        return carService;
-    }
-
-
-    private static CarsDao getCarsDaoImpl() {
-        switch (DATABASE) {
-            case "oracle": {
-                return new CarsDaoOracle();
-            }
-            case "mongodb": {
-                return new CarsDaoMongoDb();
-            }
-            default: {
-                throw new RuntimeException("Unknown DB");
-            }
-        }
-    }
-
-
-    private static CarsExport getCarsExportImpl() {
-        switch (EXPORT_TARGET) {
-            case "csv": {
-                return new CarsExportCsv();
-            }
-            case "json": {
-                return new CarsExportJson();
-            }
-            default: {
-                throw new RuntimeException("Unsupported file format");
-            }
-        }
-    }
 }
