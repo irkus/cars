@@ -1,6 +1,5 @@
 package com.germany.berlin;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +12,7 @@ import static org.mockito.Mockito.*;
 
 public class CarServiceTest {
 
-    private CarService carService;
+    private CarServiceImpl carService;
     private List<Car> expectedCars;
     private CarsExport carsExportMocked;
     private CarsDao carsDaoMocked;
@@ -27,7 +26,7 @@ public class CarServiceTest {
         carsExportMocked = mock(CarsExport.class);
         carsDaoMocked = mock(CarsDao.class);
 
-        carService = new CarService();
+        carService = new CarServiceImpl();
         carService.setCarsDao(carsDaoMocked);
         carService.setCarsExport(carsExportMocked);
 

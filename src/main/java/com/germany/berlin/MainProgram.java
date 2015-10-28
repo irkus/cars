@@ -13,8 +13,8 @@ public class MainProgram {
     public static void main(String[] args) {
 
         ApplicationContext context = new ClassPathXmlApplicationContext("spring-cars-beans.xml");
+        CarServiceImpl service = (CarServiceImpl) context.getBean("carService");
 
-        CarService service = (CarService) context.getBean("CarService");
         List<Car> cars = service.getCars();
         System.out.println(cars);
         service.export();

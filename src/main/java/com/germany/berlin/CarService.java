@@ -3,27 +3,12 @@ package com.germany.berlin;
 import java.util.List;
 
 /**
- * Created by iushakova on 05/10/15.
+ * Created by iushakova on 28/10/15.
  */
-public class CarService {
+public interface CarService {
 
-    private CarsDao carsDao;
-    private CarsExport carsExport;
+    List<Car> getCars();
 
-    public List<Car> getCars() {
-        return carsDao.getAllCars();
-    }
+    void export();
 
-    public void export() {
-        List<Car> cars = carsDao.getAllCars();
-        carsExport.export(cars);
-    }
-
-    public void setCarsDao(CarsDao carsDao) {
-        this.carsDao = carsDao;
-    }
-
-    public void setCarsExport(CarsExport carsExport) {
-        this.carsExport = carsExport;
-    }
 }
